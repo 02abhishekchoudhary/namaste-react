@@ -1,0 +1,23 @@
+{
+  "name": "namaste-react",
+  "version": "1.0.0",
+  "description": "React JS 2025",
+  "homepage": "https://github.com/02abhishekchoudhary/namaste-react#readme",
+  "bugs": {
+    "url": "https://github.com/02abhishekchoudhary/namaste-react/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/02abhishekchoudhary/namaste-react.git"
+  },
+  "license": "ISC",
+  "author": "Abhishek Choudhary",
+  "type": "commonjs",
+  "main": "App.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "parcel": "^2.13.3"
+  }
+}
