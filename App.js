@@ -1,47 +1,73 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-// React.createElement => ReactElement-JS Object => HTMLElement(render)
-// const heading = React.createElement(
-//   "h1",
-//   { id: "heading" },
-//   "Itachi Uchia 🐦‍⬛"
-// );
-
-// JSX -HTML like or XML-like syntax
-// JSX => Babel transpiles it to React.createElement => ReactElement-JS Object => HTMLElement(render)
-// Babel is converting JSX code and converts into React code
-// Attributes should be written in camelcase in JSX
-// For multiple lines of JSX code we have to wrap our code in ()
-
-// React Element
-const heading = (
-  <h1 id="heading" className="heading">
-    Naruto Uzumaki 🦊
-  </h1>
-);
-
-// React Component:
-//  1. Class based components - Old
-//  2. Functional components - New
-
-// React functional component
-const Title = () => {
-  return <h1 className="heading">Naruto Starts Learning Namaste React 🦊</h1>;
+const Header = () => {
+  return (
+    <div className="header">
+      <div className="logo-container">
+        <img
+          src="https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png?nwm=1&nws=1&industry=fast-food&sf=&txt_keyword=All"
+          alt="Logo of food delivery app"
+          className="logo"
+        />
+      </div>
+      <div className="nav-items">
+        <ul>
+          <li>Home</li>
+          <li>About Us</li>
+          <li>Contact Us</li>
+          <li>Cart</li>
+        </ul>
+      </div>
+    </div>
+  );
 };
 
-// Component Composition
-const HeadingComponent = () => (
-  <div id="container">
-    <Title />
-    <Title></Title>
-    {Title()}
-    {heading}
-    <h1 className="heading">Itachi starts learning React JS 🐦‍⬛</h1>
-  </div>
-);
+const RestaurantCard = (props) => {
+  const { resName, cuisine, rating, url, time } = props;
+  return (
+    <div className="res-card">
+      <img src={url} alt="Ramen in a bowl" className="res-logo" />
+      <h3>{resName}</h3>
+      <h4>{cuisine}</h4>
+      <h5>{rating}</h5>
+      <h6>{time}</h6>
+    </div>
+  );
+};
+
+const Body = () => {
+  return (
+    <div className="body">
+      <div className="search">Search</div>
+      <div className="res-container">
+        <RestaurantCard
+          url="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/767b25b484fdb48962b6a1bfb31525fe"
+          resName="Ichiraku Ramen"
+          cuisine="Ramen, Korean, Chinese"
+          rating="4.9 Stars"
+          time="38 mins"
+        />
+        <RestaurantCard
+          url="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/FOOD_CATALOG/IMAGES/CMS/2024/5/20/d8b3d7ab-10f4-4b37-9874-73b5e99c26c6_1b12a325-8980-45e4-8121-0e458703dbde.jpg"
+          resName="Itachi Pizza"
+          cuisine="Italian, Indian, Chinese"
+          rating="4.8 Stars"
+          time="25 mins"
+        />
+      </div>
+    </div>
+  );
+};
+
+const AppLayout = () => {
+  return (
+    <div className="app">
+      <Header />
+      <Body />
+    </div>
+  );
+};
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
-// root.render(heading);
-root.render(<HeadingComponent />);
+root.render(<AppLayout />);
