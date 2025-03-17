@@ -20,6 +20,18 @@ const Body = () => {
         >
           Top Rated Restaurants
         </button>
+        <button
+          className="filter-btn"
+          onClick={() => {
+            const sortedList = resList.sort(
+              (a, b) => a.data.avgRating - b.data.avgRating
+            );
+            console.log(sortedList);
+            setListOfRestaurants(sortedList);
+          }}
+        >
+          Sort By Rating
+        </button>
       </div>
       <div className="res-container">
         {listOfRestaurants.map((restaurant, index) => (
