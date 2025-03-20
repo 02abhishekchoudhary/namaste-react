@@ -3,7 +3,7 @@ import { useState } from "react";
 
 const Header = () => {
   const [btnNameReact, setBtnNamereact] = useState("Login");
-  console.log("Body Render");
+  // console.log("Body Render");
   return (
     <div className="header">
       <div className="logo-container">

@@ -4,6 +4,8 @@ import Shimmer from "./Shimmer";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -17,8 +19,8 @@ const Body = () => {
     const restaurantData = json?.data?.cards?.find((item) =>
       item?.card?.card?.id?.includes("restaurant_grid")
     )?.card?.card?.gridElements?.infoWithStyle?.restaurants;
-    // console.log(restaurantData);
     setListOfRestaurants(restaurantData);
+    setFilteredRestaurants(restaurantData);
   };
 
   return listOfRestaurants.length === 0 ? (
@@ -26,33 +28,54 @@ const Body = () => {
   ) : (
     <div className="body">
       <div className="filter">
+        <div className="search">
+          <input
+            type="text"
+            className="search-text"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+
+          <button
+            onClick={() => {
+              const filteredRestaurants = listOfRestaurants.filter((res) =>
+                res?.info?.name.toLowerCase().includes(searchText.toLowerCase())
+              );
+              setFilteredRestaurants(filteredRestaurants);
+            }}
+          >
+            Search
+          </button>
+        </div>
+
         <button
           className="filter-btn"
           onClick={() => {
             const filteredList = listOfRestaurants.filter(
-              (res) => res?.resData?.avgRating > 4
+              (res) => res?.info?.avgRating > 4.3
             );
-            // console.log(filteredList);
-            setListOfRestaurants(filteredList);
+            console.log(filteredList);
+            setFilteredRestaurants(filteredList);
           }}
         >
           Top Rated Restaurants
         </button>
-        {/* <button
+
+        <button
           className="filter-btn"
           onClick={() => {
-            const sortedList = resList.sort(
-              (a, b) => a.data.avgRating - b.data.avgRating
+            const sortedList = [...listOfRestaurants].sort(
+              (a, b) => a?.info?.avgRating - b?.info?.avgRating
             );
             console.log(sortedList);
-            setListOfRestaurants(sortedList);
+            setFilteredRestaurants(sortedList);
           }}
         >
           Sort By Rating
-        </button> */}
+        </button>
       </div>
       <div className="res-container">
-        {listOfRestaurants.map((restaurant, index) => (
+        {filteredRestaurants.map((restaurant, index) => (
           <RestaurantCard
             key={restaurant?.info?.id}
             resData={restaurant?.info}
