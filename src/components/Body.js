@@ -7,6 +7,9 @@ const Body = () => {
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
 
+  // useEffect with empty dependacy array -> useEffect is called on initial render just once.
+  // useEffect without dependacy array -> useEffect is called on every render of the component.
+  // useEffect with value in dependacy array -> useEffect is called on value changed of dependancy array.
   useEffect(() => {
     fetchData();
   }, []);
