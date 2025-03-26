@@ -5,54 +5,56 @@ import Shimmer from "./Shimmer";
 
 const RestaurantMenu = () => {
   const [resInfo, setResInfo] = useState(null);
-  // const [resMenuInfo, setResMenuInfo] = useState([]);
+  const [resMenu, setResMenu] = useState([]);
   const { resId } = useParams();
 
   const fetchMenu = async () => {
     try {
       const response = await fetch(RESTAURANT_MENU_API);
       const json = await response.json();
+      const menuData = json?.data?.cards
+        ?.find((obj) => obj?.groupedCard)
+        ?.groupedCard?.cardGroupMap?.REGULAR?.cards?.filter(
+          (obj) =>
+            obj?.card?.card["@type"]?.includes("ItemCategory") ||
+            obj?.card?.card["@type"]?.includes("NestedItemCategory")
+        );
+      // console.log(menuData);
+
+      const organisedMenuData = menuData?.map((item) => {
+        const type = item?.card?.card["@type"];
+        const title = item?.card?.card?.title;
+        const itemCards = item?.card?.card?.itemCards || [];
+        const categories = item?.card?.card?.categories || [];
+        // console.log(categories);
+
+        if (type?.includes("NestedItemCategory")) {
+          return {
+            title,
+            type: "nested",
+            categories: categories?.map((subcategory) => {
+              return {
+                title: subcategory?.title,
+                itemCards: subcategory?.itemCards,
+              };
+            }),
+          };
+        } else {
+          return {
+            title,
+            type: "item",
+            itemCards,
+          };
+        }
+      });
+
       setResInfo(
-        js?.data?.cards?.find((item) =>
+        json?.data?.cards?.find((item) =>
           item?.card?.card["@type"]?.includes("food.v2.Restaurant")
         )?.card?.card?.info
       );
 
-      // const menuData = json?.data?.cards
-      //   ?.find((obj) => obj?.groupedCard)
-      //   ?.groupedCard?.cardGroupMap?.REGULAR?.cards?.filter(
-      //     (obj) =>
-      //       obj?.card?.card["@type"]?.includes("ItemCategory") ||
-      //       obj?.card?.card["@type"]?.includes("NestedItemCategory")
-      //   );
-
-      // const organisedMenuData = menuData?.map((item) => {
-      //   const type = item?.card?.card["@type"];
-      //   const title = item?.card?.card?.title;
-      //   const itemCards = item?.card?.card?.itemCards || [];
-      //   const categories = item?.card?.card?.categories || [];
-      //   if (type?.includes("NestedItemCategory")) {
-      //     return {
-      //       title,
-      //       type: "nested",
-      //       categories: categories?.map((subcategory) => {
-      //         return {
-      //           title: subcategory?.title,
-      //           itemCards: subcategory?.itemCards,
-      //         };
-      //       }),
-      //     };
-      //   } else {
-      //     return {
-      //       title,
-      //       type: "item",
-      //       itemCards,
-      //     };
-      //   }
-      // });
-      // setResMenu(menuData);
-      // setResMenuInfo(organisedMenuData);
-      // console.log(menuData);
+      setResMenu(organisedMenuData);
     } catch (err) {
       console.log("Error in fetching menu API", err);
     }
@@ -71,43 +73,77 @@ const RestaurantMenu = () => {
       <h1>{name}</h1>
       <p>Locality: {locality}</p>
       <p>Rating: {avgRating}</p>
+      {resMenu?.map((category) =>
+        category?.type === "item" ? (
+          <ItemCategory key={category?.title} data={category} />
+        ) : (
+          <NestedItemCategory key={category?.title} data={category} />
+        )
+      )}
     </div>
-    // {/* {resMenu?.map((category) =>
-    //   category?.type === "item" ? (
-    //     <ItemCategory key={category?.title} data={category} />
-    //   ) : (
-    //     <NestedItemCategory key={category?.title} data={category} />
-    //   )
-    // )} */}
   );
 };
 
-// const ItemCategory = (props) => {
-//   console.log(props);
-//   const { title, itemCards } = props?.data;
-//   return (
-//     <div>
-//       <h2>{title}</h2>
-//       <ul>
-//         {itemCards?.map((item) => (
-//           <MenuItem menuInfo={item?.card?.info} />
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
+const ItemCategory = (props) => {
+  // console.log(props);
+  const { title, itemCards } = props?.data;
+  return (
+    <div>
+      <h2 style={{ border: "1px solid black" }}>
+        {title} ({itemCards?.length})
+      </h2>
+      <ul>
+        {itemCards?.map((item) => (
+          <MenuItem key={item?.card?.info?.id} menuInfo={item?.card?.info} />
+        ))}
+      </ul>
+    </div>
+  );
+};
 
-// const NestedItemCategory = (props) => {
-//   return <div></div>;
-// };
+const NestedItemCategory = (props) => {
+  // console.log(props);
+  const { title, categories } = props?.data;
+  return (
+    <div>
+      <h2 style={{ border: "1px solid black" }}></h2>
+      <div>
+        {categories?.map((subcategory) => (
+          <div key={subcategory?.title}>
+            <h3>
+              {subcategory?.title} ({subcategory?.itemCards?.length})
+            </h3>
+            <ul>
+              {subcategory?.itemCards?.map((item) => (
+                <MenuItem
+                  key={item?.card?.info?.id}
+                  menuInfo={item?.card?.info}
+                />
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
-// const MenuItem = (props) => {
-//   const { name, price, defaultPrice, description } = props?.menuInfo;
-//   return (
-//     <li>
-//       <h4>{name}</h4>
-//     </li>
-//   );
-// };
+const MenuItem = (props) => {
+  // console.log(props?.menuInfo);
+  const { name, price, defaultPrice, description, imageId } = props?.menuInfo;
+  const RESTAURANT_MENU_IMG =
+    "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/";
+  return (
+    <li>
+      <div>
+        <h4>{name}</h4>
+        {price && <span>Rs {(price / 100).toFixed(2)}</span>}
+        {defaultPrice && <span>Rs {(defaultPrice / 100).toFixed(2)}</span>}
+        {description && <p>{description}</p>}
+      </div>
+      <div>{imageId && <img src={RESTAURANT_MENU_IMG + imageId} />}</div>
+    </li>
+  );
+};
 
 export default RestaurantMenu;
