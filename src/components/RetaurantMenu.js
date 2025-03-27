@@ -72,8 +72,8 @@ const RestaurantMenu = () => {
   return (
     <div className="menu-container">
       <h1>{name}</h1>
-      <p>Locality: {locality}</p>
-      <p>Rating: {avgRating}</p>
+      <h3>Locality: {locality}</h3>
+      <h4>Rating: {avgRating}</h4>
       {resMenu?.map((category) =>
         category?.type === "item" ? (
           <ItemCategory key={category?.title} data={category} />
@@ -90,7 +90,7 @@ const ItemCategory = (props) => {
   const { title, itemCards } = props?.data;
   return (
     <div>
-      <h2 style={{ border: "1px solid black" }}>
+      <h2 className="heading-title">
         {title} ({itemCards?.length})
       </h2>
       <ul>
@@ -107,7 +107,7 @@ const NestedItemCategory = (props) => {
   const { title, categories } = props?.data;
   return (
     <div>
-      <h2 style={{ border: "1px solid black" }}></h2>
+      <h2 className="heading-title">{title}</h2>
       <div>
         {categories?.map((subcategory) => (
           <div key={subcategory?.title}>
@@ -135,7 +135,7 @@ const MenuItem = (props) => {
   const RESTAURANT_MENU_IMG =
     "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/";
   return (
-    <li>
+    <li className="menuitem">
       <div>
         <h4>{name}</h4>
         {price && <span>Rs {(price / 100).toFixed(2)}</span>}
