@@ -27,6 +27,7 @@
 
 .res-card {
   width: 200px;
+  height: 450px;
   padding: 5px;
   margin: 5px;
   border: 1px solid black;
@@ -94,4 +95,9 @@
 .heading-title {
   border: 1px solid gray;
   border-radius: 5px;
+}
+
+.user-card {
+  padding: 10px;
+  border: 1px solid black;
 }
