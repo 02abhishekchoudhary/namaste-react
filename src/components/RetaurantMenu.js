@@ -7,10 +7,11 @@ const RestaurantMenu = () => {
   const [resInfo, setResInfo] = useState(null);
   const [resMenu, setResMenu] = useState([]);
   const { resId } = useParams();
+  // console.log(resId);
 
   const fetchMenu = async () => {
     try {
-      const response = await fetch(RESTAURANT_MENU_API);
+      const response = await fetch(RESTAURANT_MENU_API + resId);
       const json = await response.json();
       const menuData = json?.data?.cards
         ?.find((obj) => obj?.groupedCard)

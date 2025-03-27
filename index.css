@@ -72,3 +72,12 @@
 .filter {
   display: flex;
 }
+
+.rmv-links {
+  color: black;
+  text-decoration: none;
+}
+
+.rmv-link:hover {
+  cursor: default;
+}
