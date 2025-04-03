@@ -14,8 +14,10 @@ class About extends React.Component {
     // console.log("Parents Render Called");
     return (
       <div>
-        <h1>About Us</h1>
-        <h2>Welcome to about us page of food delivery app</h2>
+        <h1 className="font-bold text-center text-3xl mt-8">About Us</h1>
+        <h2 className="font-semibold text-center text-2xl mt-4">
+          Welcome to about us page of food delivery app
+        </h2>
         <UserClass name={"Itachi"} location={"Konoha"} />
       </div>
     );

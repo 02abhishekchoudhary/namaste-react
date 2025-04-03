@@ -41,15 +41,23 @@ class UserClass extends React.Component {
       this.state.userInfo;
 
     return (
-      <div className="user-card">
-        <img src={avatar_url} alt="Avatar" height={100} width={100} />
-        <h2>Name: {name}</h2>
-        <h3>Location: {location}</h3>
-        <h3>Username: {login}</h3>
-        <h3>Id: {id}</h3>
-        <h3>Bio: {bio}</h3>
-        <h3>Followers: {followers}</h3>
-        <h3>Following: {following}</h3>
+      <div className="flex items-center justify-center">
+        <div className="m-4 p-4 rounded-lg bg-gray-100 hover:bg-gray-200 w-[300px] h-[550px]">
+          <img
+            className="w-[300px] h-[250px] rounded-lg mb-8"
+            src={avatar_url}
+            alt="Avatar"
+          />
+          <h2 className="font-bold">
+            Name:<span className="uppercase"> {name}</span>
+          </h2>
+          <h3 className="font-bold">Location: {location}</h3>
+          <h3 className="font-bold">Username: {login}</h3>
+          <h3 className="font-bold">Id: {id}</h3>
+          <h3 className="font-bold">Bio: {bio}</h3>
+          <h3 className="font-bold">Followers: {followers}</h3>
+          <h3 className="font-bold">Following: {following}</h3>
+        </div>
       </div>
     );
   }
