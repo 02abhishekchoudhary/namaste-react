@@ -43,15 +43,16 @@ const Body = () => {
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="filter">
-        <div className="search">
+      <div className="flex">
+        <div className="m-4 p-4">
           <input
             type="text"
-            className="search-text"
+            className="border border-black rounded-md"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
           <button
+            className="px-4 py-2 m-4 bg-green-100 rounded-lg"
             onClick={() => {
               const filteredRestaurants = listOfRestaurants.filter((res) =>
                 res?.info?.name.toLowerCase().includes(searchText.toLowerCase())
@@ -62,32 +63,34 @@ const Body = () => {
             Search
           </button>
         </div>
-        <button
-          className="filter-btn"
-          onClick={() => {
-            const filteredList = listOfRestaurants.filter(
-              (res) => res?.info?.avgRating > 4.3
-            );
-            // console.log(filteredList);
-            setFilteredRestaurants(filteredList);
-          }}
-        >
-          Top Rated Restaurants
-        </button>
-        <button
-          className="filter-btn"
-          onClick={() => {
-            const sortedList = [...listOfRestaurants].sort(
-              (a, b) => a?.info?.avgRating - b?.info?.avgRating
-            );
-            // console.log(sortedList);
-            setFilteredRestaurants(sortedList);
-          }}
-        >
-          Sort By Rating
-        </button>
+        <div className=" flex items-center">
+          <button
+            className="px-4 py-2 m-4 bg-orange-200 rounded-lg"
+            onClick={() => {
+              const filteredList = listOfRestaurants.filter(
+                (res) => res?.info?.avgRating > 4.3
+              );
+              // console.log(filteredList);
+              setFilteredRestaurants(filteredList);
+            }}
+          >
+            Top Rated Restaurants
+          </button>
+          <button
+            className="px-4 py-2 m-4 bg-blue-200 rounded-lg"
+            onClick={() => {
+              const sortedList = [...listOfRestaurants].sort(
+                (a, b) => a?.info?.avgRating - b?.info?.avgRating
+              );
+              // console.log(sortedList);
+              setFilteredRestaurants(sortedList);
+            }}
+          >
+            Sort By Rating
+          </button>
+        </div>
       </div>
-      <div className="res-container">
+      <div className="flex flex-wrap">
         {filteredRestaurants.map((restaurant, index) => (
           <Link
             className="rmv-links"

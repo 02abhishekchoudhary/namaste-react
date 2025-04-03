@@ -9,28 +9,28 @@ const Header = () => {
   const onlineStatus = useOnlineStatus();
   // console.log("Body Render");
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between border border-black m-1 bg-orange-50 xl:bg-yellow-100">
       <div className="logo-container">
         <img src={LOGO_URL} alt="Logo of food delivery app" className="w-56" />
       </div>
       <div className="flex items-center">
         <ul className="flex p-4 m-4">
-          <li className="px-4 text-lg">
+          <li className="px-4 text-lg font-bold text-orange-500">
             Online Status: {onlineStatus ? "🟢" : "🔴"}
           </li>
-          <li className="px-4">
+          <li className="px-4 font-bold  text-orange-500">
             <Link to="/">Home</Link>
           </li>
-          <li className="px-4">
+          <li className="px-4 font-bold  text-orange-500">
             <Link to="/about">About Us</Link>
           </li>
-          <li className="px-4">
+          <li className="px-4 font-bold  text-orange-500">
             <Link to="/grocery">Grocery</Link>
           </li>
-          <li className="px-4">
+          <li className="px-4 font-bold  text-orange-500">
             <Link to="/contact">Contact Us</Link>
           </li>
-          <li className="px-4">
+          <li className="px-4 font-bold  text-orange-500">
             <Link>Cart</Link>
           </li>
           <button
