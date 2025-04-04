@@ -9,9 +9,13 @@ const Header = () => {
   const onlineStatus = useOnlineStatus();
   // console.log("Body Render");
   return (
-    <div className="flex justify-between border border-black m-1 bg-orange-300">
+    <div className="flex justify-between border rounded-lg border-black m-1 bg-orange-300">
       <div className="logo-container">
-        <img src={LOGO_URL} alt="Logo of food delivery app" className="w-56" />
+        <img
+          src={LOGO_URL}
+          alt="Logo of food delivery app"
+          className="w-56 rounded-t-lg rounded-b-lg"
+        />
       </div>
       <div className="flex items-center">
         <ul className="flex p-4 m-4">
