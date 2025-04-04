@@ -1,4 +1,4 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import Shimmer from "./Shimmer";
@@ -8,6 +8,9 @@ const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
+
+  const PromotedRestaurantCard = withPromotedLabel(RestaurantCard);
+  console.log(listOfRestaurants);
 
   // useEffect with empty dependacy array -> useEffect is called on initial render just once.
   // useEffect without dependacy array -> useEffect is called on every render of the component.
@@ -32,7 +35,7 @@ const Body = () => {
   };
 
   const onlineStatus = useOnlineStatus();
-  console.log(onlineStatus);
+  // console.log(onlineStatus);
   if (onlineStatus === false) {
     return (
       <h1>You are offline!! Please check your internet connection once!!</h1>
@@ -97,7 +100,11 @@ const Body = () => {
             to={"/restaurants/" + restaurant?.info?.id}
             key={restaurant?.info?.id}
           >
-            <RestaurantCard resData={restaurant?.info} />
+            {restaurant?.info?.id ? (
+              <PromotedRestaurantCard resData={restaurant?.info} />
+            ) : (
+              <RestaurantCard resData={restaurant?.info} />
+            )}
           </Link>
         ))}
       </div>

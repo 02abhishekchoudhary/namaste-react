@@ -21,4 +21,17 @@ const RestaurantCard = (props) => {
   );
 };
 
+export const withPromotedLabel = (RestaurantCard) => {
+  return (props) => {
+    return (
+      <div className="relative">
+        <label className="absolute bg-black text-white px-2 py-1 text-xs rounded top-2 left-2 z-10">
+          Open
+        </label>
+        <RestaurantCard {...props} />
+      </div>
+    );
+  };
+};
+
 export default RestaurantCard;
