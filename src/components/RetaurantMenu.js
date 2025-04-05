@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { RESTAURANT_MENU_API } from "../utils/constants";
+import ItemCategory from "./ItemCategory";
+import NestedItemCategory from "./NestedItemCategory";
 
 const RestaurantMenu = () => {
   const [resInfo, setResInfo] = useState(null);
   const [resMenu, setResMenu] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(null);
   const { resId } = useParams();
   // console.log(resId);
 
@@ -70,91 +73,33 @@ const RestaurantMenu = () => {
 
   return (
     <div className="">
-      <div className="flex justify-around border border-black m-1 items-center h-24 rounded-lg text-2xl font-extrabold mt-4">
+      <div className="flex justify-around  m-1 items-center h-24 rounded-lg text-2xl font-extrabold mt-4 w-9/12 mx-auto shadow-lg">
         <h1 className="uppercase text-3xl text-orange-500">{name}</h1>
         <h3 className="text-blue-400">Locality: {locality}</h3>
         <h4 className="text-green-400">Rating: {avgRating}⭐</h4>
       </div>
-      {resMenu?.map((category) =>
+      {resMenu?.map((category, index) =>
         category?.type === "item" ? (
-          <ItemCategory key={category?.title} data={category} />
+          <ItemCategory
+            key={category?.title}
+            data={category}
+            isActive={activeIndex === index}
+            onToggle={() =>
+              setActiveIndex(activeIndex === index ? null : index)
+            }
+          />
         ) : (
-          <NestedItemCategory key={category?.title} data={category} />
+          <NestedItemCategory
+            key={category?.title}
+            data={category}
+            isActive={activeIndex === index}
+            onToggle={() =>
+              setActiveIndex(activeIndex === index ? null : index)
+            }
+          />
         )
       )}
     </div>
-  );
-};
-
-const ItemCategory = (props) => {
-  // console.log(props);
-  const { title, itemCards } = props?.data;
-  return (
-    <div>
-      <h2 className="font-extrabold text-2xl uppercase text-center m-4">
-        {title} ({itemCards?.length})
-      </h2>
-      <ul>
-        {itemCards?.map((item) => (
-          <MenuItem key={item?.card?.info?.id} menuInfo={item?.card?.info} />
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-const NestedItemCategory = (props) => {
-  // console.log(props);
-  const { title, categories } = props?.data;
-  return (
-    <div>
-      <h2 className="text-2xl text-center mt-4 font-semibold">{title}</h2>
-      <div className="">
-        {categories?.map((subcategory) => (
-          <div key={subcategory?.title}>
-            <h3 className="font-extrabold text-2xl uppercase text-center m-4">
-              {subcategory?.title} ({subcategory?.itemCards?.length})
-            </h3>
-            <ul>
-              {subcategory?.itemCards?.map((item) => (
-                <MenuItem
-                  key={item?.card?.info?.id}
-                  menuInfo={item?.card?.info}
-                />
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const MenuItem = (props) => {
-  // console.log(props?.menuInfo);
-  const { name, price, defaultPrice, description, imageId } = props?.menuInfo;
-  const RESTAURANT_MENU_IMG =
-    "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/";
-  return (
-    <li className="flex justify-between border border-black mt-4 rounded-md p-2">
-      <div className="">
-        <h4 className="font-semibold text-xl uppercase mt-4">{name}</h4>
-        {price && (
-          <span className="font-semibold text-xl">
-            Rs {(price / 100).toFixed(2)}
-          </span>
-        )}
-        {defaultPrice && (
-          <span className="font-semibold text-xl">
-            Rs {(defaultPrice / 100).toFixed(2)}
-          </span>
-        )}
-        {description && <p className="font-semibold text-xl">{description}</p>}
-      </div>
-      <div className="m-2">
-        {imageId && <img src={RESTAURANT_MENU_IMG + imageId} />}
-      </div>
-    </li>
   );
 };
 
