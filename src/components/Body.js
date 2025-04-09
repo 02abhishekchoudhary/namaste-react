@@ -11,7 +11,7 @@ const Body = () => {
   const [searchText, setSearchText] = useState("");
 
   const PromotedRestaurantCard = withPromotedLabel(RestaurantCard);
-  console.log(listOfRestaurants);
+  // console.log(listOfRestaurants);
 
   // useEffect with empty dependacy array -> useEffect is called on initial render just once.
   // useEffect without dependacy array -> useEffect is called on every render of the component.

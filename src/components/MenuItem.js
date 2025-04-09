@@ -1,6 +1,14 @@
+import { useDispatch } from "react-redux";
 import { RESTAURANT_MENU_IMG, CDN_URL } from "../utils/constants";
+import { addItems } from "../utils/cartSlice";
 
 const MenuItem = (props) => {
+  const dispatch = useDispatch();
+  const handleAddItem = (item) => {
+    // Dispatch an action
+    dispatch(addItems(item));
+  };
+
   const { name, price, defaultPrice, description, imageId } = props?.menuInfo;
   return (
     <div>
@@ -20,7 +28,10 @@ const MenuItem = (props) => {
           {description && <p className=" text-lg">{description}</p>}
         </div>
         <div className="relative">
-          <button className="text-white bg-black absolute rounded-lg bottom-0 right-">
+          <button
+            className="text-white bg-black absolute rounded-lg bottom-0 right-"
+            onClick={() => handleAddItem(props?.menuInfo)}
+          >
             Add+
           </button>
           {imageId && (

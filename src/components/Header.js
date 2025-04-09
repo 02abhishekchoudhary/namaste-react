@@ -14,6 +14,7 @@ const Header = () => {
 
   // Subscribing to the store using Selector
   const cartItems = useSelector((store) => store.cart.items);
+  // console.log(cartItems);
 
   return (
     <div className="flex justify-between border rounded-lg border-black m-1 bg-orange-300">
@@ -42,7 +43,7 @@ const Header = () => {
             <Link to="/contact">Contact Us</Link>
           </li>
           <li className="px-4 font-bold text-xl text-white">
-            Cart - ({cartItems.length} items)
+            <Link to="/cart">Cart - ({cartItems.length} items)</Link>
           </li>
           <button
             className="border border-black px-4 bg-red-400"
