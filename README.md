@@ -20,3 +20,9 @@
 - Different Dev and Production bundles
 
 # Chunkig - lazy loading - code spilitting - dynamic bundling - on demand loading - dynamix import
+
+# Types of testing (developer)
+
+- Unit Testing
+- Integration Testing
+- End to End Testing
