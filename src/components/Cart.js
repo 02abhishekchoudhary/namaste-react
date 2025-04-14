@@ -5,7 +5,7 @@ import { clearCart } from "../utils/cartSlice";
 const Cart = () => {
   // Right way of subscribing the store -> High efficient
   const cartItems = useSelector((store) => store.cart.items);
-  console.log(cartItems);
+  // console.log(cartItems);
 
   // Less efficient - Because it will change whenever store changes.
   // const store = useSelector((store) => store);

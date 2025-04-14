@@ -13,7 +13,7 @@ const MenuItem = (props) => {
   return (
     <div>
       <li className="flex justify-between border border-black mt-4 mx-auto rounded-md p-2 w-11/12 items-center shadow-lg">
-        <div className="w-8/12">
+        <div className="w-8/12" data-testid="foodItem">
           <h4 className="font-semibold text-xl uppercase mb-3 ">{name}</h4>
 
           <span className=" text-xl mb-3">

@@ -6,6 +6,7 @@ const ItemCategory = ({ data, isActive, onToggle }) => {
   return (
     <div className="w-9/12 mx-auto my-4 bg-gray-50 shadow-lg">
       <div
+        data-testid="accordion-header"
         className="p-4 flex justify-between cursor-pointer"
         onClick={onToggle}
       >
