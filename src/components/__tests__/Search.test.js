@@ -31,3 +31,22 @@ it("Should Search Restaurant list for pizza input", async () => {
   const cardsAfterSearch = await screen.findAllByTestId("resCard");
   expect(cardsAfterSearch.length).toBe(2);
 });
+
+it("Should filter Top rated Restaurant", async () => {
+  render(
+    <BrowserRouter>
+      <Body />
+    </BrowserRouter>
+  );
+
+  const cardBeforeFilter = await screen.findAllByTestId("resCard");
+  expect(cardBeforeFilter.length).toBe(8);
+
+  const topratedBtn = await screen.findByRole("button", {
+    name: "Top Rated Restaurants",
+  });
+  fireEvent.click(topratedBtn);
+
+  const cardsAfterFilter = await screen.findAllByTestId("resCard");
+  expect(cardsAfterFilter.length).toBe(5);
+});
